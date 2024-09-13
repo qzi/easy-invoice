@@ -181,6 +181,7 @@ const Invoice2Component = () => {
             justifyContent: "space-between",
             alignItems: "center",
             marginTop: "10px",
+            marginBottom: "12px",
           }}
         >
           <b>Desc.</b>

@@ -43,6 +43,17 @@ button {
   border-radius: 4px; /* 添加圆角 */
 }
 
+/* 隐藏 number input 的增加减少按钮 */
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
 hr {
   margin-top: 10px;
 
