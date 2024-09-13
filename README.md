@@ -18,6 +18,7 @@ add ./src/components/invoiceConfig.json
     }
   }
 ```
+By default, git would ignore invoiceConfig.json and wouldn't push it to remote repo  
 
 ## Available Scripts
 
