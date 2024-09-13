@@ -1,0 +1,27 @@
+.invoice-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: '100%';
+  background-color: #ffffff;
+}
+
+.invoice-input {
+  border: none;
+  height: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.hide-buttons button {
+  display: none;
+}
+
+.remove-button {
+  display: block;
+}
+
+@media print {
+  .remove-button {
+    display: none !important;
+  }
+}
