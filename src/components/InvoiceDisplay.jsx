@@ -34,7 +34,7 @@ const InvoiceDisplay = () => {
               justifyContent: 'space-between',
               marginBottom: '10px',
             }}>
-            <b>Desc:</b> <b>Amount</b>
+            <b>Desc.</b> <b>Amount</b>
           </div>
           <ul>
             {invoiceData.items.map((item, index) => (
