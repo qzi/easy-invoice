@@ -13,6 +13,8 @@ const Invoice2Component = () => {
   const [invoiceId, setInvoiceId] = useState("");
   const [billFrom, setBillFrom] = useState({ name: ''});
   const [billTo, setBillTo] = useState({ name: ''});
+  const [invoiceDate, setInvoiceDate] = useState('');
+
 
   useEffect(() => {
     // Generate a unique invoice ID
@@ -42,7 +44,7 @@ const Invoice2Component = () => {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    html2canvas(input, { useCORS: true, scale: 3 })
+    html2canvas(input, { useCORS: true, scale: 2 })
       .then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const imgWidth = pageWidth;
@@ -62,7 +64,9 @@ const Invoice2Component = () => {
           heightLeft -= pageHeight;
         }
 
-        pdf.save("invoice.pdf");
+        pdf.save(`Invoice-${invoiceId}.pdf`);
+        // pdf.save("invoice.pdf");
+
         // Remove the class after generating the PDF
         input.classList.remove("hide-buttons");
       })
@@ -95,14 +99,24 @@ const Invoice2Component = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" >
       <div className="invoice-container" ref={invoiceRef}>
-        <h1>Invoice</h1>
+        <h2>Invoice</h2>
         <p style={{fontSize: 'small', color: 'rgb(206, 206, 205)'}}>Invoice ID: {invoiceId}</p>
+        <label>
+          <b >Date: </b>
+          <input
+            type="date"
+            value={invoiceDate}
+            onChange={(e) => setInvoiceDate(e.target.value)}
+            className="invoice-input"
+          />
+        </label>
+        
 
         {/* Customer Info */}
         <div>
-          <b>Bill From </b>
+          <b>Bill From: </b>
           <input
             type="text"
             placeholder="Bill From Name"
@@ -113,7 +127,7 @@ const Invoice2Component = () => {
         </div>
 
         <div>
-          <b>Bill To </b>
+          <b>Bill To: </b>
           <input
             type="text"
             placeholder="Bill To Name"
@@ -124,7 +138,6 @@ const Invoice2Component = () => {
         </div>
 
         {/* Item List */}
-        {/* <h2>Items</h2> */}
         <hr />
         {items.map((item, index) => (
           <div key={index}>
@@ -147,9 +160,8 @@ const Invoice2Component = () => {
         <button
           className="remove-button"
           onClick={addItem}
-          // style={{ marginTop: "10px" }}
         >
-          Add Item
+          +
         </button>
         <hr></hr>
         {/* Total */}
@@ -158,7 +170,6 @@ const Invoice2Component = () => {
         <button
           className="remove-button"
           onClick={generatePDF}
-          // style={{ marginTop: "10px" }}
         >
           Download PDF
         </button>

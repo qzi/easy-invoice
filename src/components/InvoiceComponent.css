@@ -12,12 +12,13 @@ body, html {
 
 
 .invoice-container {
-  padding: 20px;
+  padding: 80px 80px 80px 80px;
   font-family: Arial, sans-serif;
   width: '100%';
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 8px; /* 添加圆角 */
+
 }
 
 .invoice-input {
@@ -44,8 +45,16 @@ button {
 
 hr {
   margin-top: 10px;
-}
 
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333;
+  /* old IE */
+  background-color: #333;
+  /* Modern Browsers */
+
+}
 p {
   font-size: small;
 }
