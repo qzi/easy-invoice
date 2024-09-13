@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Invoice2Component from './components/invoice2.jsx';
-import InvoiceDisplay from './components/InvoiceDisplay.js';
+import InvoiceDisplay from './components/InvoiceDisplay.jsx';
 
 function App() {
   return (

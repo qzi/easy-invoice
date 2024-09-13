@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import './InvoiceComponent.css';
+import './Invoice.css';
 
 const InvoiceDisplay = () => {
   const location = useLocation();
@@ -28,18 +28,26 @@ const InvoiceDisplay = () => {
         </div>
         <div>
           <hr></hr>
-          <b>Items:</b>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: '10px',
+            }}>
+            <b>Desc:</b> <b>Amount</b>
+          </div>
           <ul>
             {invoiceData.items.map((item, index) => (
-              <li key={index}>
-                {item.description} - ¥ {item.price}
-              </li>
+              <React.Fragment key={index}>
+                <li>{item.description}</li>
+                <li>{item.price}</li>
+              </React.Fragment>
             ))}
           </ul>
           <hr></hr>
         </div>
-        <div>
-          <b>Total:</b> ${invoiceData.total}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <b>Total:</b> ¥{invoiceData.total}
         </div>
       </div>
     </div>

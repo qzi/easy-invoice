@@ -3,7 +3,7 @@ import InvoiceItem from './InvoiceItem.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-import './InvoiceComponent.css';
+import './Invoice.css';
 
 const InvoiceComponent = () => {
   const [items, setItems] = useState([

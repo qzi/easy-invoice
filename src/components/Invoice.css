@@ -12,13 +12,13 @@ body, html {
 
 
 .invoice-container {
-  padding: 80px 80px 80px 80px;
+  padding: 60px 60px 60px 60px;
   font-family: Arial, sans-serif;
   width: '100%';
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 8px; /* 添加圆角 */
-
+  font-size: 12px;
 }
 
 .invoice-input {
@@ -42,6 +42,14 @@ button {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 4px; /* 添加圆角 */
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex; justify-content: space-between;
+}
+
 
 /* 隐藏 number input 的增加减少按钮 */
 .no-spinner::-webkit-outer-spin-button,

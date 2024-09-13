@@ -1,11 +1,11 @@
 /* eslint-env browser */
 import React, { useState, useRef, useEffect } from 'react';
-import InvoiceItem from './InvoiceItem.js';
+import InvoiceItem from './InvoiceItem.jsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 
-import './InvoiceComponent.css';
+import './Invoice.css';
 import InvoiceConfig from './invoiceConfig.json';
 
 const Invoice2Component = () => {
