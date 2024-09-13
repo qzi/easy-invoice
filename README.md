@@ -2,6 +2,11 @@
 Easy Invoice can help to generate the invoice
 Based on it, you can customize the invoice as per your requirement easily.
 
+
+## Pre-requisite
+1. Node.js@20
+2. React@18
+
 ## Available Scripts
 
 In the project directory, you can run:
