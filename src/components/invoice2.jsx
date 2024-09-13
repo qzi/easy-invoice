@@ -1,7 +1,9 @@
+/* eslint-env browser */
 import React, { useState, useRef, useEffect } from 'react';
 import InvoiceItem from './InvoiceItem.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useNavigate } from 'react-router-dom';
 
 import './InvoiceComponent.css';
 import InvoiceConfig from './invoiceConfig.json';
@@ -14,6 +16,7 @@ const Invoice2Component = () => {
   const [billFrom, setBillFrom] = useState({ name: '' });
   const [billTo, setBillTo] = useState({ name: '' });
   const [invoiceDate, setInvoiceDate] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Generate a unique invoice ID
@@ -23,7 +26,9 @@ const Invoice2Component = () => {
     setInvoiceId(generateInvoiceId());
 
     // Set the document title
-    document.title = `Invoice ${invoiceId}`;
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.title = `Invoice ${invoiceId}`;
+    }
 
     // Set default values for Bill From and Bill To
     setBillFrom(InvoiceConfig.billFrom);
@@ -95,6 +100,18 @@ const Invoice2Component = () => {
     return items
       .reduce((total, item) => total + item.quantity * item.price, 0)
       .toFixed(2);
+  };
+
+  const handleDisplayInvoice = () => {
+    const invoiceData = {
+      invoiceId,
+      invoiceDate,
+      billFrom,
+      billTo,
+      items,
+      total: calculateTotal(),
+    };
+    navigate('/display', { state: { invoiceData } });
   };
 
   return (
@@ -216,6 +233,10 @@ const Invoice2Component = () => {
 
         <button className="remove-button" onClick={generatePDF}>
           Download PDF
+        </button>
+
+        <button onClick={handleDisplayInvoice} style={{ marginTop: '10px' }}>
+          Display Invoice
         </button>
       </div>
     </div>

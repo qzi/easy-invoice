@@ -1,12 +1,17 @@
 import React from 'react';
-// import InvoiceComponent from "./components/invoice.mjs";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Invoice2Component from './components/invoice2.jsx';
+import InvoiceDisplay from './components/InvoiceDisplay.js';
 
 function App() {
   return (
-    <div className="App">
-      <Invoice2Component></Invoice2Component>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Invoice2Component />} />
+        <Route path="/display" element={<InvoiceDisplay />} />
+      </Routes>
+    </Router>
   );
 }
 
