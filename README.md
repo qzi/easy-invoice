@@ -31,4 +31,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
 ## Preview 
-![Tux, the Linux mascot](https://i.imgur.com/OjhdP5r.png)
+<img src="https://i.imgur.com/OjhdP5r.png" width=60% height=60%>
+
