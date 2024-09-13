@@ -31,5 +31,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
 ## Preview 
-<img src="https://i.imgur.com/OjhdP5r.png" width=60% height=60%>
+<img src="https://i.imgur.com/ax5B29m.png" width=60% height=60%>
 
