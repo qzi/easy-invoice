@@ -7,7 +7,7 @@ Based on it, you can customize the invoice as per your requirement easily.
 * Node.js@20
 * React@18
 
-add ./src/components/invoiceComponents.json
+add ./src/components/invoiceConfig.json
 ```
 {
     "billFrom": {
