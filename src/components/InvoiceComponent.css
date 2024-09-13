@@ -1,8 +1,23 @@
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+
 .invoice-container {
   padding: 20px;
   font-family: Arial, sans-serif;
   width: '100%';
   background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  border-radius: 8px; /* 添加圆角 */
 }
 
 .invoice-input {
@@ -16,8 +31,37 @@
   display: none;
 }
 
+/* 隐藏所有按钮 */
+button {
+  background-color: #ffffff; /* 与背景颜色相同 */
+  border: none; 
+  color: #000000; /* 设置文本颜色 */
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+  border-radius: 4px; /* 添加圆角 */
+}
+
+hr {
+  margin-top: 10px;
+}
+
+p {
+  font-size: small;
+}
+
+b {
+  font-size: small;
+  
+}
+
+button:hover {
+  background-color: #f0f0f0; /* 悬停时稍微改变背景颜色 */
+}
+
 .remove-button {
   display: block;
+  margin: 10px 0 0 0;
 }
 
 @media print {

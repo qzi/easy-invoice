@@ -4,12 +4,15 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 import "./InvoiceComponent.css";
+import InvoiceConfig from './invoiceConfig.json';
 
 const Invoice2Component = () => {
   const [items, setItems] = useState([
     { description: "", quantity: 1, price: 0 },
   ]);
   const [invoiceId, setInvoiceId] = useState("");
+  const [billFrom, setBillFrom] = useState({ name: ''});
+  const [billTo, setBillTo] = useState({ name: ''});
 
   useEffect(() => {
     // Generate a unique invoice ID
@@ -17,7 +20,14 @@ const Invoice2Component = () => {
       return `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
     };
     setInvoiceId(generateInvoiceId());
-  }, []);
+
+    // Set the document title
+    document.title = `Invoice ${invoiceId}`;
+
+    // Set default values for Bill From and Bill To
+    setBillFrom(InvoiceConfig.billFrom);
+    setBillTo(InvoiceConfig.billTo);
+  }, [invoiceId]);
 
   const invoiceRef = useRef();
 
@@ -32,7 +42,7 @@ const Invoice2Component = () => {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    html2canvas(input, { useCORS: true, scale: 2 })
+    html2canvas(input, { useCORS: true, scale: 3 })
       .then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const imgWidth = pageWidth;
@@ -85,64 +95,74 @@ const Invoice2Component = () => {
   };
 
   return (
-    <div className="invoice-container" ref={invoiceRef}>
-      <h1>Invoice</h1>
-      <p>Invoice ID: {invoiceId}</p>
+    <div className="container">
+      <div className="invoice-container" ref={invoiceRef}>
+        <h1>Invoice</h1>
+        <p style={{fontSize: 'small', color: 'rgb(206, 206, 205)'}}>Invoice ID: {invoiceId}</p>
 
-      {/* Customer Info */}
-      <div>
-        <h2>Bill From</h2>
-        <input
-          type="text"
-          placeholder="Bill From Name"
-          className="invoice-input"
-        />
-      </div>
-
-      <div>
-        <h2>Bill To</h2>
-        <input
-          type="text"
-          placeholder="Bill To Name"
-          className="invoice-input"
-        />
-      </div>
-
-      {/* Item List */}
-      <h2>Items</h2>
-      {items.map((item, index) => (
-        <div key={index}>
-          <InvoiceItem
-            item={item}
-            index={index}
-            handleItemChange={handleItemChange}
+        {/* Customer Info */}
+        <div>
+          <b>Bill From </b>
+          <input
+            type="text"
+            placeholder="Bill From Name"
+            className="invoice-input"
+            value={billFrom.name}
+            onChange={(e) => setBillFrom({ ...billFrom, name: e.target.value })}
           />
-          {items.length > 1 && (
-            <button className="remove-button" onClick={() => removeItem(index)}>
-              Remove Item
-            </button>
-          )}
         </div>
-      ))}
 
-      <button
-        className="remove-button"
-        onClick={addItem}
-        // style={{ marginTop: "10px" }}
-      >
-        Add Item
-      </button>
+        <div>
+          <b>Bill To </b>
+          <input
+            type="text"
+            placeholder="Bill To Name"
+            className="invoice-input"
+            value={billTo.name}
+            onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
+          />
+        </div>
 
-      {/* Total */}
-      <h2>Total: ¥{calculateTotal()}</h2>
+        {/* Item List */}
+        {/* <h2>Items</h2> */}
+        <hr />
+        {items.map((item, index) => (
+          <div key={index}>
+            <InvoiceItem
+              item={item}
+              index={index}
+              handleItemChange={handleItemChange}
+            />
+            {items.length > 1 && (
+              <button
+                className="remove-button"
+                onClick={() => removeItem(index)}
+              >
+                Remove Item
+              </button>
+            )}
+          </div>
+        ))}
 
-      <button
-        className="remove-button"
-        onClick={generatePDF}
-        // style={{ marginTop: "10px" }}
-      >
-        Download PDF
-      </button>
+        <button
+          className="remove-button"
+          onClick={addItem}
+          // style={{ marginTop: "10px" }}
+        >
+          Add Item
+        </button>
+        <hr></hr>
+        {/* Total */}
+        <b>Total: ¥{calculateTotal()}</b>
+
+        <button
+          className="remove-button"
+          onClick={generatePDF}
+          // style={{ marginTop: "10px" }}
+        >
+          Download PDF
+        </button>
+      </div>
     </div>
   );
 };
