@@ -52,6 +52,7 @@ button {
 
 .no-spinner {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 hr {
