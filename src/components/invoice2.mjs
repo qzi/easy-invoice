@@ -4,17 +4,16 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 import "./InvoiceComponent.css";
-import InvoiceConfig from './invoiceConfig.json';
+import InvoiceConfig from "./invoiceConfig.json";
 
 const Invoice2Component = () => {
   const [items, setItems] = useState([
     { description: "", quantity: 1, price: 0 },
   ]);
   const [invoiceId, setInvoiceId] = useState("");
-  const [billFrom, setBillFrom] = useState({ name: ''});
-  const [billTo, setBillTo] = useState({ name: ''});
-  const [invoiceDate, setInvoiceDate] = useState('');
-
+  const [billFrom, setBillFrom] = useState({ name: "" });
+  const [billTo, setBillTo] = useState({ name: "" });
+  const [invoiceDate, setInvoiceDate] = useState("");
 
   useEffect(() => {
     // Generate a unique invoice ID
@@ -99,46 +98,94 @@ const Invoice2Component = () => {
   };
 
   return (
-    <div className="container" >
+    <div className="container">
       <div className="invoice-container" ref={invoiceRef}>
         <h2>Invoice</h2>
-        <p style={{fontSize: 'small', color: 'rgb(206, 206, 205)'}}>Invoice ID: {invoiceId}</p>
-        <label>
-          <b >Date: </b>
-          <input
-            type="date"
-            value={invoiceDate}
-            onChange={(e) => setInvoiceDate(e.target.value)}
-            className="invoice-input"
-          />
-        </label>
-        
 
-        {/* Customer Info */}
-        <div>
-          <b>Bill From: </b>
-          <input
-            type="text"
-            placeholder="Bill From Name"
-            className="invoice-input"
-            value={billFrom.name}
-            onChange={(e) => setBillFrom({ ...billFrom, name: e.target.value })}
-          />
+        {/* Bill From */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "10px",
+            marginTop: "10px",
+          }}
+        >
+          <div>
+            <b>Bill From: </b>
+            <input
+              type="text"
+              placeholder="Bill From Name"
+              className="invoice-input"
+              value={billFrom.name}
+              onChange={(e) =>
+                setBillFrom({ ...billFrom, name: e.target.value })
+              }
+            />
+          </div>
+
+          <div
+            style={{
+              fontSize: "8px",
+              color: "rgb(206, 206, 205)",
+            }}
+          >
+            <span>Invoice Date: </span>
+            <input
+              type="date"
+              value={invoiceDate}
+              onChange={(e) => setInvoiceDate(e.target.value)}
+              className="invoice-input"
+              style={{
+                fontSize: "8px",
+                color: "rgb(206, 206, 205)",
+              }}
+            />
+          </div>
         </div>
 
-        <div>
-          <b>Bill To: </b>
-          <input
-            type="text"
-            placeholder="Bill To Name"
-            className="invoice-input"
-            value={billTo.name}
-            onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
-          />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <b>Bill To: </b>
+            <input
+              type="text"
+              placeholder="Bill To Name"
+              className="invoice-input"
+              value={billTo.name}
+              onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
+            />
+          </div>
+          <b
+            style={{
+              fontSize: "8px",
+              color: "rgb(206, 206, 205)",
+              textAlign: "right",
+            }}
+          >
+            Invoice ID: {invoiceId}
+          </b>
         </div>
 
         {/* Item List */}
         <hr />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "10px",
+          }}
+        >
+          <b>Desc.</b>
+          <b>Amount</b>
+        </div>
         {items.map((item, index) => (
           <div key={index}>
             <InvoiceItem
@@ -151,26 +198,29 @@ const Invoice2Component = () => {
                 className="remove-button"
                 onClick={() => removeItem(index)}
               >
-                Remove Item
+                -
               </button>
             )}
           </div>
         ))}
 
-        <button
-          className="remove-button"
-          onClick={addItem}
-        >
+        <button className="remove-button" onClick={addItem}>
           +
         </button>
         <hr></hr>
         {/* Total */}
-        <b>Total: ¥{calculateTotal()}</b>
-
-        <button
-          className="remove-button"
-          onClick={generatePDF}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
         >
+          <div></div>
+          <b style={{ textAlign: "right" }}>Total: ¥{calculateTotal()}</b>
+        </div>
+
+        <button className="remove-button" onClick={generatePDF}>
           Download PDF
         </button>
       </div>

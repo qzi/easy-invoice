@@ -24,8 +24,8 @@ body, html {
 .invoice-input {
   border: none;
   height: 20px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  /* margin-right: 10px; */
+  /* margin-bottom: 10px; */
 }
 
 .hide-buttons button {
@@ -37,7 +37,7 @@ button {
   background-color: #ffffff; /* 与背景颜色相同 */
   border: none; 
   color: #000000; /* 设置文本颜色 */
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 4px; /* 添加圆角 */
@@ -60,8 +60,7 @@ p {
 }
 
 b {
-  font-size: small;
-  
+  font-size: 12px;
 }
 
 button:hover {

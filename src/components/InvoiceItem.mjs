@@ -17,7 +17,7 @@ function InvoiceItem({ item, index, handleItemChange }) {
         placeholder="Price"
         value={item.price}
         onChange={(e) => handleItemChange(index, "price", e.target.value)}
-        style={{ marginRight: "10px" }}
+        style={{ marginRight: "8px", textAlign:"right" }}
         className="invoice-input"
       />
       {/* <span>{(item.quantity * item.price).toFixed(2)}</span> */}
