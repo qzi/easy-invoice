@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+
 import './Invoice.css';
 
 const InvoiceDisplay = () => {
@@ -14,11 +15,18 @@ const InvoiceDisplay = () => {
     <div className="container">
       <div className="invoice-container">
         <h2>Invoice</h2>
-        <div>
-          <b>Invoice ID:</b> {invoiceData.invoiceId}
-        </div>
-        <div>
-          <b>Date:</b> {invoiceData.invoiceDate}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '10px',
+          }}>
+          <div>
+            <b>Date:</b> {invoiceData.invoiceDate}
+          </div>
+          <div style={{ color: 'gray' }}>
+            <b>Invoice ID:</b> {invoiceData.invoiceId}
+          </div>
         </div>
         <div>
           <b>Bill From:</b> {invoiceData.billFrom.name}
@@ -40,7 +48,7 @@ const InvoiceDisplay = () => {
             {invoiceData.items.map((item, index) => (
               <React.Fragment key={index}>
                 <li>{item.description}</li>
-                <li>{item.price}</li>
+                <li>{Number(item.price)}</li>
               </React.Fragment>
             ))}
           </ul>

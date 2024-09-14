@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 
 function InvoiceItem({ item, index, handleItemChange }) {
   return (
-    <div style={{ display: 'flex', marginBottom: '10px' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: '10px',
+      }}>
       <input
         type="text"
         placeholder="Item Description"
         value={item.description}
         onChange={(e) => handleItemChange(index, 'description', e.target.value)}
-        style={{ width: '200px' }}
         className="invoice-input no-spinner"
+        style={{ width: '100%' }}
       />
 
       <input

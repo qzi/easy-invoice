@@ -12,13 +12,13 @@ body, html {
 
 
 .invoice-container {
-  padding: 60px 60px 60px 60px;
+  padding: 30px;
   font-family: Arial, sans-serif;
-  width: '100%';
+  width: 500px;
   background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
   border-radius: 8px; /* 添加圆角 */
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .invoice-input {

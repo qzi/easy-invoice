@@ -18,22 +18,46 @@ const Invoice2Component = () => {
   const [invoiceDate, setInvoiceDate] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Generate a unique invoice ID
-    const generateInvoiceId = () => {
-      return `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    };
-    setInvoiceId(generateInvoiceId());
+  // Generate a unique invoice ID
+  const generateInvoiceId = () => {
+    return `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  };
 
-    // Set the document title
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      document.title = `Invoice ${invoiceId}`;
-    }
+  useEffect(() => {
+    setInvoiceId(generateInvoiceId());
 
     // Set default values for Bill From and Bill To
     setBillFrom(InvoiceConfig.billFrom);
     setBillTo(InvoiceConfig.billTo);
+
+    // Set the initial invoice date to today
+    const today = new Date().toISOString().split('T')[0];
+    setInvoiceDate(today);
+  }, []);
+
+  useEffect(() => {
+    // Set the document title
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.title = `Invoice ${invoiceId}`;
+    }
   }, [invoiceId]);
+
+  // useEffect(() => {
+  //   setInvoiceId(generateInvoiceId());
+
+  //   // Set the document title
+  //   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+  //     document.title = `Invoice ${invoiceId}`;
+  //   }
+
+  //   // Set default values for Bill From and Bill To
+  //   setBillFrom(InvoiceConfig.billFrom);
+  //   setBillTo(InvoiceConfig.billTo);
+
+  //   // Set the initial invoice date to today
+  //   const today = new Date().toISOString().split('T')[0];
+  //   setInvoiceDate(today);
+  // }, [invoiceId]);
 
   const invoiceRef = useRef();
 
