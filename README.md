@@ -24,12 +24,15 @@ By default, git would ignore invoiceConfig.json and wouldn't push it to remote r
 
 In the project directory, you can run:
 
-### `npm start`
+```
+npm install
+npm start
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 
 ## Preview 
-<img src="https://i.imgur.com/ax5B29m.png" width=60% height=60%>
+<img src="https://i.imgur.com/Iqarg1N.png" width=60% height=60%>
 
