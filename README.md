@@ -36,3 +36,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 ## Preview 
 <img src="https://i.imgur.com/Iqarg1N.png" width=60% height=60%>
 
+## License
+License under BSD 3-Clause License
