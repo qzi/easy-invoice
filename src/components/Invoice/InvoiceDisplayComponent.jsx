@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import './Invoice.css';
 
-const InvoiceDisplayComponent = () => {
+function InvoiceDisplayComponent() {
   const location = useLocation();
   const { invoiceData } = location.state || {};
 
@@ -20,46 +20,61 @@ const InvoiceDisplayComponent = () => {
             display: 'flex',
             justifyContent: 'space-between',
             marginBottom: '10px',
-          }}>
+          }}
+        >
           <div>
-            <b>Date:</b> {invoiceData.invoiceDate}
+            <b>Date:</b>
+            {' '}
+            {invoiceData.invoiceDate}
           </div>
           <div style={{ color: 'gray' }}>
-            <b>Invoice ID:</b> {invoiceData.invoiceId}
+            <b>Invoice ID:</b>
+            {' '}
+            {invoiceData.invoiceId}
           </div>
         </div>
         <div>
-          <b>Bill From:</b> {invoiceData.billFrom.name}
+          <b>Bill From:</b>
+          {' '}
+          {invoiceData.billFrom.name}
         </div>
         <div>
-          <b>Bill To:</b> {invoiceData.billTo.name}
+          <b>Bill To:</b>
+          {' '}
+          {invoiceData.billTo.name}
         </div>
         <div>
-          <hr></hr>
+          <hr />
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
               marginBottom: '10px',
-            }}>
-            <b>Desc.</b> <b>Amount</b>
+            }}
+          >
+            <b>Desc.</b>
+            {' '}
+            <b>Amount</b>
           </div>
           <ul>
-            {invoiceData.items.map((item, index) => (
-              <React.Fragment key={index}>
+            {invoiceData.items.map((item) => (
+              <React.Fragment key={item.id}>
                 <li>{item.description}</li>
                 <li>{Number(item.price)}</li>
               </React.Fragment>
             ))}
           </ul>
-          <hr></hr>
+          <hr />
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <b>Total:</b> ¥{invoiceData.total}
+          <b>Total:</b>
+          {' '}
+          ¥
+          {invoiceData.total}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default InvoiceDisplayComponent;

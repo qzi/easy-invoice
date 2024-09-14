@@ -1,14 +1,15 @@
 /* eslint-env browser */
+
 import React, { useState, useRef, useEffect } from 'react';
-import InvoiceItem from './InvoiceItemComponent.jsx';
-import jsPDF from 'jspdf';
+import JSPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
+import InvoiceItem from './InvoiceItemComponent';
 
 import './Invoice.css';
 import InvoiceConfig from './InvoiceConfig.json';
 
-const InvoiceComponent = () => {
+function InvoiceComponent() {
   const [items, setItems] = useState([
     { description: '', quantity: 1, price: 0 },
   ]);
@@ -19,9 +20,7 @@ const InvoiceComponent = () => {
   const navigate = useNavigate();
 
   // Generate a unique invoice ID
-  const generateInvoiceId = () => {
-    return `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-  };
+  const generateInvoiceId = () => `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
   useEffect(() => {
     setInvoiceId(generateInvoiceId());
@@ -51,7 +50,7 @@ const InvoiceComponent = () => {
     input.classList.add('hide-buttons');
 
     // A4 size in points (1px = 0.75pt) in portrait orientation
-    const pdf = new jsPDF('p', 'pt', 'a4');
+    const pdf = new JSPDF('p', 'pt', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
@@ -82,16 +81,20 @@ const InvoiceComponent = () => {
         input.classList.remove('hide-buttons');
       })
       .catch((err) => {
-        console.error('Error generating PDF', err);
+        // TODO: disable console.error in production
+        if (process.env.NODE_ENV !== 'production') {
+          /* eslint-disable no-console */
+          console.error('Error generating PDF', err);
+        }
+
+        // alert.error('Error generating PDF', err);
         // Remove the class in case of error
         input.classList.remove('hide-buttons');
       });
   };
 
   const handleItemChange = (index, field, value) => {
-    const updatedItems = items.map((item, i) =>
-      i === index ? { ...item, [field]: value } : item,
-    );
+    const updatedItems = items.map((item, i) => (i === index ? { ...item, [field]: value } : item));
     setItems(updatedItems);
   };
 
@@ -103,11 +106,9 @@ const InvoiceComponent = () => {
     setItems(items.filter((item, i) => i !== index));
   };
 
-  const calculateTotal = () => {
-    return items
-      .reduce((total, item) => total + item.quantity * item.price, 0)
-      .toFixed(2);
-  };
+  const calculateTotal = () => items
+    .reduce((total, item) => total + item.quantity * item.price, 0)
+    .toFixed(2);
 
   const handleDisplayInvoice = () => {
     const invoiceData = {
@@ -134,7 +135,8 @@ const InvoiceComponent = () => {
             alignItems: 'center',
             marginBottom: '10px',
             marginTop: '10px',
-          }}>
+          }}
+        >
           <div>
             <b>Bill From: </b>
             <input
@@ -142,9 +144,7 @@ const InvoiceComponent = () => {
               placeholder="Bill From Name"
               className="invoice-input"
               value={billFrom.name}
-              onChange={(e) =>
-                setBillFrom({ ...billFrom, name: e.target.value })
-              }
+              onChange={(e) => setBillFrom({ ...billFrom, name: e.target.value })}
             />
           </div>
 
@@ -152,7 +152,8 @@ const InvoiceComponent = () => {
             style={{
               fontSize: '8px',
               color: 'rgb(206, 206, 205)',
-            }}>
+            }}
+          >
             <span>Invoice Date: </span>
             <input
               type="date"
@@ -172,7 +173,8 @@ const InvoiceComponent = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <div>
             <b>Bill To: </b>
             <input
@@ -188,8 +190,11 @@ const InvoiceComponent = () => {
               fontSize: '8px',
               color: 'rgb(206, 206, 205)',
               textAlign: 'right',
-            }}>
-            Invoice ID: {invoiceId}
+            }}
+          >
+            Invoice ID:
+            {' '}
+            {invoiceId}
           </b>
         </div>
 
@@ -202,52 +207,59 @@ const InvoiceComponent = () => {
             alignItems: 'center',
             marginTop: '10px',
             marginBottom: '12px',
-          }}>
+          }}
+        >
           <b>Desc.</b>
           <b>Amount</b>
         </div>
-        {items.map((item, index) => (
-          <div key={index}>
+        {items.map((item) => (
+          <div key={item.id}>
             <InvoiceItem
               item={item}
-              index={index}
+              index={item.id}
               handleItemChange={handleItemChange}
             />
             {items.length > 1 && (
               <button
+                type="button"
                 className="remove-button"
-                onClick={() => removeItem(index)}>
+                onClick={() => removeItem(item.id)}
+              >
                 -
               </button>
             )}
           </div>
         ))}
 
-        <button className="remove-button" onClick={addItem}>
+        <button type="button" className="remove-button" onClick={addItem}>
           +
         </button>
-        <hr></hr>
+        <hr />
         {/* Total */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-          }}>
-          <div></div>
-          <b style={{ textAlign: 'right' }}>Total: ¥{calculateTotal()}</b>
+          }}
+        >
+          <div />
+          <b style={{ textAlign: 'right' }}>
+            Total: ¥
+            {calculateTotal()}
+          </b>
         </div>
 
-        <button className="remove-button" onClick={generatePDF}>
+        <button type="button" className="remove-button" onClick={generatePDF}>
           Download PDF
         </button>
 
-        <button onClick={handleDisplayInvoice} style={{ marginTop: '10px' }}>
+        <button type="button" onClick={handleDisplayInvoice} style={{ marginTop: '10px' }}>
           Display Invoice
         </button>
       </div>
     </div>
   );
-};
+}
 
 export default InvoiceComponent;

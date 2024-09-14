@@ -8,7 +8,8 @@ function InvoiceItemComponent({ item, index, handleItemChange }) {
         display: 'flex',
         justifyContent: 'space-between',
         marginBottom: '10px',
-      }}>
+      }}
+    >
       <input
         type="text"
         placeholder="Item Description"
