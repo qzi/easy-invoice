@@ -42,23 +42,6 @@ const Invoice2Component = () => {
     }
   }, [invoiceId]);
 
-  // useEffect(() => {
-  //   setInvoiceId(generateInvoiceId());
-
-  //   // Set the document title
-  //   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-  //     document.title = `Invoice ${invoiceId}`;
-  //   }
-
-  //   // Set default values for Bill From and Bill To
-  //   setBillFrom(InvoiceConfig.billFrom);
-  //   setBillTo(InvoiceConfig.billTo);
-
-  //   // Set the initial invoice date to today
-  //   const today = new Date().toISOString().split('T')[0];
-  //   setInvoiceDate(today);
-  // }, [invoiceId]);
-
   const invoiceRef = useRef();
 
   const generatePDF = () => {
