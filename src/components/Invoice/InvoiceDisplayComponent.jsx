@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import './Invoice.css';
 
-const InvoiceDisplay = () => {
+const InvoiceDisplayComponent = () => {
   const location = useLocation();
   const { invoiceData } = location.state || {};
 
@@ -62,4 +62,4 @@ const InvoiceDisplay = () => {
   );
 };
 
-export default InvoiceDisplay;
+export default InvoiceDisplayComponent;

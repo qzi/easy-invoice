@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InvoiceItem({ item, index, handleItemChange }) {
+function InvoiceItemComponent({ item, index, handleItemChange }) {
   return (
     <div
       style={{
@@ -32,7 +32,7 @@ function InvoiceItem({ item, index, handleItemChange }) {
 }
 
 // reivew this block later
-InvoiceItem.propTypes = {
+InvoiceItemComponent.propTypes = {
   item: PropTypes.shape({
     description: PropTypes.string,
     price: PropTypes.number,
@@ -41,4 +41,4 @@ InvoiceItem.propTypes = {
   handleItemChange: PropTypes.func.isRequired,
 };
 
-export default InvoiceItem;
+export default InvoiceItemComponent;

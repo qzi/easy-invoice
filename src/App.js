@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Invoice2Component from './components/invoice2.jsx';
-import InvoiceDisplay from './components/InvoiceDisplay.jsx';
+import InvoiceComponent from './components/Invoice/InvoiceComponent.jsx';
+import InvoiceDisplayComponent from './components/Invoice/InvoiceDisplayComponent.jsx';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Invoice2Component />} />
-        <Route path="/display" element={<InvoiceDisplay />} />
+        <Route path="/" element={<InvoiceComponent />} />
+        <Route path="/display" element={<InvoiceDisplayComponent />} />
       </Routes>
     </Router>
   );

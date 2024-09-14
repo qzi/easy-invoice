@@ -1,14 +1,14 @@
 /* eslint-env browser */
 import React, { useState, useRef, useEffect } from 'react';
-import InvoiceItem from './InvoiceItem.jsx';
+import InvoiceItem from './InvoiceItemComponent.jsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 
 import './Invoice.css';
-import InvoiceConfig from './invoiceConfig.json';
+import InvoiceConfig from './InvoiceConfig.json';
 
-const Invoice2Component = () => {
+const InvoiceComponent = () => {
   const [items, setItems] = useState([
     { description: '', quantity: 1, price: 0 },
   ]);
@@ -250,4 +250,4 @@ const Invoice2Component = () => {
   );
 };
 
-export default Invoice2Component;
+export default InvoiceComponent;
