@@ -30,6 +30,8 @@ In the project directory, you can run:
 ```
 npm install
 npm start
+npm run eslint-fix .
+npm run prettier-format .
 ```
 
 Runs the app in the development mode.\
