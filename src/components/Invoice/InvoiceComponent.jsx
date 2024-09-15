@@ -11,7 +11,7 @@ import InvoiceConfig from './InvoiceConfig.json';
 
 function InvoiceComponent() {
   const [items, setItems] = useState([
-    { description: '', quantity: 1, price: 0 },
+    { description: '', price: 0 },
   ]);
   const [invoiceId, setInvoiceId] = useState('');
   const [billFrom, setBillFrom] = useState({ name: '' });
@@ -102,7 +102,7 @@ function InvoiceComponent() {
   };
 
   const addItem = () => {
-    setItems([...items, { description: '', quantity: 1, price: 0 }]);
+    setItems([...items, { description: '',  price: 0 }]);
   };
 
   const removeItem = (index) => {
@@ -111,7 +111,7 @@ function InvoiceComponent() {
 
   const calculateTotal = () =>
     items
-      .reduce((total, item) => total + item.quantity * item.price, 0)
+      .reduce((total, item) => total +  item.price, 0)
       .toFixed(2);
 
   const handleDisplayInvoice = () => {

@@ -27,7 +27,6 @@ function InvoiceItemComponent({ item, index, handleItemChange }) {
         style={{ textAlign: 'right' }}
         className="invoice-input no-spinner"
       />
-      {/* <span>{(item.quantity * item.price).toFixed(2)}</span> */}
     </div>
   );
 }
