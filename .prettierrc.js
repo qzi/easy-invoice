@@ -1,5 +1,5 @@
-module.exports = {
+export default {
   singleQuote: true,
   bracketSameLine: true,
-  endOfLine: "auto",
+  endOfLine: 'auto',
 };

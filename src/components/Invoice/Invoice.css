@@ -1,6 +1,7 @@
 /* style for the invoice component */
 
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
 }
@@ -12,7 +13,6 @@ body, html {
   height: 100%;
   margin-top: 90px;
 }
-
 
 .invoice-container {
   padding: 30px;
@@ -38,7 +38,7 @@ body, html {
 /* 隐藏所有按钮 */
 button {
   background-color: #ffffff; /* 与背景颜色相同 */
-  border: none; 
+  border: none;
   color: #000000; /* 设置文本颜色 */
   padding: 5px;
   cursor: pointer;
@@ -50,9 +50,9 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  display: flex; justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
-
 
 /* 隐藏 number input 的增加减少按钮 */
 .no-spinner::-webkit-outer-spin-button,
@@ -76,7 +76,6 @@ hr {
   /* old IE */
   background-color: #333;
   /* Modern Browsers */
-
 }
 p {
   font-size: small;
