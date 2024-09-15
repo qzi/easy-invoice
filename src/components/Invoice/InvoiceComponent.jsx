@@ -66,7 +66,7 @@ function InvoiceComponent() {
     input.classList.add('hide-buttons');
 
     // A4 size in points (1px = 0.75pt) in portrait orientation
-    const pdf = new JSPDF('p', 'pt', 'a4');
+    const pdf = new JSPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
