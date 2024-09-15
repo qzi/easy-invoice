@@ -20,7 +20,8 @@ function InvoiceComponent() {
   const navigate = useNavigate();
 
   // Generate a unique invoice ID
-  const generateInvoiceId = () => `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  const generateInvoiceId = () =>
+    `INV-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
   useEffect(() => {
     setInvoiceId(generateInvoiceId());
@@ -94,7 +95,9 @@ function InvoiceComponent() {
   };
 
   const handleItemChange = (index, field, value) => {
-    const updatedItems = items.map((item, i) => (i === index ? { ...item, [field]: value } : item));
+    const updatedItems = items.map((item, i) =>
+      i === index ? { ...item, [field]: value } : item,
+    );
     setItems(updatedItems);
   };
 
@@ -106,9 +109,10 @@ function InvoiceComponent() {
     setItems(items.filter((item, i) => i !== index));
   };
 
-  const calculateTotal = () => items
-    .reduce((total, item) => total + item.quantity * item.price, 0)
-    .toFixed(2);
+  const calculateTotal = () =>
+    items
+      .reduce((total, item) => total + item.quantity * item.price, 0)
+      .toFixed(2);
 
   const handleDisplayInvoice = () => {
     const invoiceData = {
@@ -135,8 +139,7 @@ function InvoiceComponent() {
             alignItems: 'center',
             marginBottom: '10px',
             marginTop: '10px',
-          }}
-        >
+          }}>
           <div>
             <b>Bill From: </b>
             <input
@@ -144,7 +147,9 @@ function InvoiceComponent() {
               placeholder="Bill From Name"
               className="invoice-input"
               value={billFrom.name}
-              onChange={(e) => setBillFrom({ ...billFrom, name: e.target.value })}
+              onChange={(e) =>
+                setBillFrom({ ...billFrom, name: e.target.value })
+              }
             />
           </div>
 
@@ -152,8 +157,7 @@ function InvoiceComponent() {
             style={{
               fontSize: '8px',
               color: 'rgb(206, 206, 205)',
-            }}
-          >
+            }}>
             <span>Invoice Date: </span>
             <input
               type="date"
@@ -173,8 +177,7 @@ function InvoiceComponent() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <div>
             <b>Bill To: </b>
             <input
@@ -190,11 +193,8 @@ function InvoiceComponent() {
               fontSize: '8px',
               color: 'rgb(206, 206, 205)',
               textAlign: 'right',
-            }}
-          >
-            Invoice ID:
-            {' '}
-            {invoiceId}
+            }}>
+            Invoice ID: {invoiceId}
           </b>
         </div>
 
@@ -207,8 +207,7 @@ function InvoiceComponent() {
             alignItems: 'center',
             marginTop: '10px',
             marginBottom: '12px',
-          }}
-        >
+          }}>
           <b>Desc.</b>
           <b>Amount</b>
         </div>
@@ -223,8 +222,7 @@ function InvoiceComponent() {
               <button
                 type="button"
                 className="remove-button"
-                onClick={() => removeItem(item.id)}
-              >
+                onClick={() => removeItem(item.id)}>
                 -
               </button>
             )}
@@ -241,20 +239,19 @@ function InvoiceComponent() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-          }}
-        >
+          }}>
           <div />
-          <b style={{ textAlign: 'right' }}>
-            Total: ¥
-            {calculateTotal()}
-          </b>
+          <b style={{ textAlign: 'right' }}>Total: ¥{calculateTotal()}</b>
         </div>
 
         <button type="button" className="remove-button" onClick={generatePDF}>
           Download PDF
         </button>
 
-        <button type="button" onClick={handleDisplayInvoice} style={{ marginTop: '10px' }}>
+        <button
+          type="button"
+          onClick={handleDisplayInvoice}
+          style={{ marginTop: '10px' }}>
           Display Invoice
         </button>
       </div>
