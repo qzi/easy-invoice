@@ -16,7 +16,7 @@ add ./src/components/Invoice/InvoiceConfig.json
     "billTo": {
       "name": "Customer Name"
     }
-  }
+}
 ```
 By default, git would ignore invoiceConfig.json and wouldn't push it to remote repo  
 
