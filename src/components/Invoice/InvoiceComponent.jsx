@@ -4,15 +4,30 @@ import React, { useState, useRef, useEffect } from 'react';
 import JSPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
-import InvoiceItem from './InvoiceItemComponent';
+import InvoiceItemComponent from './InvoiceItemComponent';
 
 import './Invoice.css';
-import InvoiceConfig from './InvoiceConfig.json';
+
+let InvoiceConfig;
+try {
+  InvoiceConfig = require('./InvoiceConfig.json');
+} catch (error) {
+  if (process.env.NODE_ENV !== 'production') {
+    /* eslint-disable no-console */
+    console.error(
+      'Failed to load InvoiceConfig.json, using default values',
+      error,
+    );
+  }
+
+  InvoiceConfig = {
+    billFrom: { name: 'Service Provider Name' },
+    billTo: { name: 'Customer Name' },
+  };
+}
 
 function InvoiceComponent() {
-  const [items, setItems] = useState([
-    { description: '', price: 0 },
-  ]);
+  const [items, setItems] = useState([{ description: '', price: 0 }]);
   const [invoiceId, setInvoiceId] = useState('');
   const [billFrom, setBillFrom] = useState({ name: '' });
   const [billTo, setBillTo] = useState({ name: '' });
@@ -82,7 +97,6 @@ function InvoiceComponent() {
         input.classList.remove('hide-buttons');
       })
       .catch((err) => {
-        // TODO: disable console.error in production
         if (process.env.NODE_ENV !== 'production') {
           /* eslint-disable no-console */
           console.error('Error generating PDF', err);
@@ -102,7 +116,7 @@ function InvoiceComponent() {
   };
 
   const addItem = () => {
-    setItems([...items, { description: '',  price: 0 }]);
+    setItems([...items, { description: '', price: 0 }]);
   };
 
   const removeItem = (index) => {
@@ -110,9 +124,7 @@ function InvoiceComponent() {
   };
 
   const calculateTotal = () =>
-    items
-      .reduce((total, item) => total +  item.price, 0)
-      .toFixed(2);
+    items.reduce((total, item) => total + item.price, 0).toFixed(2);
 
   const handleDisplayInvoice = () => {
     const invoiceData = {
@@ -211,11 +223,11 @@ function InvoiceComponent() {
           <b>Desc.</b>
           <b>Amount</b>
         </div>
-        {items.map((item) => (
-          <div key={item.id}>
-            <InvoiceItem
+        {items.map((item, index) => (
+          <div key={index}>
+            <InvoiceItemComponent
               item={item}
-              index={item.id}
+              index={index}
               handleItemChange={handleItemChange}
             />
             {items.length > 1 && (
