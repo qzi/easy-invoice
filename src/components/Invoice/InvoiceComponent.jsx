@@ -151,9 +151,12 @@ function InvoiceComponent() {
             alignItems: 'center',
             marginBottom: '10px',
             marginTop: '10px',
+            fontSize: '12px',
+
           }}>
-          <div>
-            <b>Bill From: </b>
+          <div
+            >
+            <b style={{ height:'16px',  boxSizing: 'border-box'}}>Bill From: </b>
             <input
               type="text"
               placeholder="Bill From Name"
@@ -179,6 +182,12 @@ function InvoiceComponent() {
               style={{
                 fontSize: '8px',
                 color: 'rgb(206, 206, 205)',
+                height: '24px',
+                border: 'none',
+                boxSizing: 'border-box',
+                lineHeight: '1',
+                padding: '0 0 0 0px',
+                
               }}
             />
           </div>

@@ -1,25 +1,33 @@
-import React from 'react';
+import React, { useRef }  from 'react';
 import { useLocation } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
 
-import './Invoice.css';
+import './InvoiceDisplay.css';
 
 function InvoiceDisplayComponent() {
   const location = useLocation();
   const { invoiceData } = location.state || {};
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
 
   if (!invoiceData) {
     return <div>No invoice data available</div>;
   }
 
   return (
-    <div className="container">
-      <div className="invoice-container">
+    <div className="container"  >
+      <button className="no-print" onClick={handlePrint}>Print Invoice</button>
+      <div className="invoice-container" ref={componentRef}>
         <h2>Invoice</h2>
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            marginBottom: '10px',
+
+            
           }}>
           <div>
             <b>Date:</b> {invoiceData.invoiceDate}

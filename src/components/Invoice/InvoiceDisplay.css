@@ -44,6 +44,12 @@ h2 {
   display: none;
 }
 
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+
 /* 隐藏所有按钮 */
 button {
   background-color: #ffffff; /* 与背景颜色相同 */
