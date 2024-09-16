@@ -1,4 +1,4 @@
-import React, { useRef }  from 'react';
+import React, { useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 
@@ -18,16 +18,17 @@ function InvoiceDisplayComponent() {
   }
 
   return (
-    <div className="container"  >
-      <button className="no-print" onClick={handlePrint}>Print Invoice</button>
+    <div className="container">
+      <button className="no-print vertical-text-button" onClick={handlePrint}>
+        Print
+      </button>
+
       <div className="invoice-container" ref={componentRef}>
         <h2>Invoice</h2>
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-
-            
           }}>
           <div>
             <b>Date:</b> {invoiceData.invoiceDate}

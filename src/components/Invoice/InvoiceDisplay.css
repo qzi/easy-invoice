@@ -11,7 +11,7 @@ html {
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-top: 90px;
+
 }
 
 .invoice-container {
@@ -19,8 +19,10 @@ html {
   font-family: Arial, sans-serif;
   width: 500px;
   background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  border-radius: 8px; /* 添加圆角 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* 添加阴影效果 */
+  border-radius: 8px;
+  /* 添加圆角 */
   font-size: 10px;
 }
 
@@ -50,15 +52,55 @@ h2 {
   }
 }
 
+.vertical-text-button {
+  font-family: Courier New;
+  font-weight: bold;
+  width: 24px;
+  /* 按钮的宽度 */
+  height: 100px;
+  /* 按钮的高度 */
+  background-color: #ffffff;
+  /* 按钮背景颜色 */
+  color: #908f8f;
+  /* 按钮文本颜色 */
+  border: none;
+  /* 去掉边框 */
+  border-radius: 5px;
+  /* 圆角边框 */
+  cursor: pointer;
+  /* 鼠标悬停时显示手型光标 */
+  transition: background-color 0.3s;
+  /* 背景颜色过渡效果 */
+  writing-mode: vertical-rl;
+  /* 垂直书写模式 */
+  text-orientation: upright;
+  /* 文字方向 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
+  text-align: center;
+
+}
+
+.vertical-text-button:hover {
+  background-color: #2e3034;
+  /* 鼠标悬停时的背景颜色 */
+}
+
 /* 隐藏所有按钮 */
 button {
-  background-color: #ffffff; /* 与背景颜色相同 */
+  background-color: #ffffff;
+  /* 与背景颜色相同 */
   border: none;
-  color: #000000; /* 设置文本颜色 */
+  color: #000000;
+  /* 设置文本颜色 */
   padding: 5px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-  border-radius: 4px; /* 添加圆角 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* 添加阴影效果 */
+  border-radius: 4px;
+  /* 添加圆角 */
 }
 
 ul {
@@ -92,6 +134,7 @@ hr {
   background-color: #333;
   /* Modern Browsers */
 }
+
 p {
   font-size: small;
 }
@@ -102,7 +145,8 @@ b {
 }
 
 button:hover {
-  background-color: #f0f0f0; /* 悬停时稍微改变背景颜色 */
+  background-color: #f0f0f0;
+  /* 悬停时稍微改变背景颜色 */
 }
 
 .remove-button {
@@ -110,8 +154,15 @@ button:hover {
   margin: 10px 0 0 0;
 }
 
+/* control the print layout */
 @media print {
   .remove-button {
     display: none !important;
+  }
+
+  .invoice-container {
+    box-sizing: border-box;
+    margin: auto;
+    padding: auto;
   }
 }
