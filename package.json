@@ -10,6 +10,9 @@
   "build": {
     "appId": "com.leon.easy-invoice",
     "productName": "Easy Invoice",
+    "extraMetadata": {
+      "main": "build/electron.js"
+    },
     "directories": {
       "buildResources": "assets"
     },

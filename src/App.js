@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 
 import InvoiceComponent from './components/Invoice/InvoiceComponent.jsx';
 import InvoiceDisplayComponent from './components/Invoice/InvoiceDisplayComponent.jsx';
