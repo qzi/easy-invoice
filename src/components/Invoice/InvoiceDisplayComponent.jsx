@@ -11,6 +11,7 @@ function InvoiceDisplayComponent() {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    documentTitle: invoiceData?.invoiceId || 'Invoice',
   });
 
   if (!invoiceData) {
@@ -29,18 +30,19 @@ function InvoiceDisplayComponent() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
+            marginBottom: '20px',
           }}>
           <div>
             <b>Date:</b> {invoiceData.invoiceDate}
           </div>
-          <div style={{ color: 'gray' }}>
+          <div style={{ color: '#666' }}>
             <b>Invoice ID:</b> {invoiceData.invoiceId}
           </div>
         </div>
-        <div>
+        <div style={{ marginBottom: '8px' }}>
           <b>Bill From:</b> {invoiceData.billFrom.name}
         </div>
-        <div>
+        <div style={{ marginBottom: '30px' }}>
           <b>Bill To:</b> {invoiceData.billTo.name}
         </div>
         <div>
@@ -49,22 +51,21 @@ function InvoiceDisplayComponent() {
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              marginBottom: '10px',
+              padding: '12px 0',
             }}>
-            <b>Desc.</b> <b>Amount</b>
+            <b>Desc.</b> <b>Amount (CNY)</b>
           </div>
-          <ul>
-            {invoiceData.items.map((item) => (
-              <React.Fragment key={item.id}>
-                <li>{item.description}</li>
-                <li>{Number(item.price)}</li>
-              </React.Fragment>
+          <ul style={{ display: 'block' }}>
+            {invoiceData.items.map((item, index) => (
+              <li key={item.id || index} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
+                <span>{item.description || 'Item'}</span>
+                <span>¥{Number(item.price).toFixed(2)}</span>
+              </li>
             ))}
           </ul>
-          <hr />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <b>Total:</b> ¥{invoiceData.total}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', fontSize: '18px' }}>
+          <b>Total (CNY):</b> <b>¥{invoiceData.total}</b>
         </div>
       </div>
     </div>

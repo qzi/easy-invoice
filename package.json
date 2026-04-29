@@ -4,6 +4,20 @@
   "private": true,
   "type": "module",
   "license": "BSD-3-Clause",
+  "author": "Leon D. Qiu",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "build": {
+    "appId": "com.leon.easy-invoice",
+    "productName": "Easy Invoice",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ]
+  },
   "dependencies": {
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
@@ -13,7 +27,8 @@
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
     "react-to-print": "^2.15.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "electron-is-dev": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,7 +36,12 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint-fix": "eslint --fix",
-    "prettier-format": "prettier --write"
+    "prettier-format": "prettier --write",
+    "electron": "electron .",
+    "electron-build": "npm run build && electron .",
+    "dist": "electron-builder",
+    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-pack": "react-scripts build --em.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +66,11 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^13.5.0",
+    "concurrently": "^9.0.1",
+    "electron": "^32.1.1",
+    "electron-builder": "^25.0.5",
+    "electron-is-dev": "^3.0.1",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -57,6 +82,6 @@
     "jest": "^27.5.1",
     "prettier": "^3.3.3",
     "react-test-renderer": "^18.3.1",
-    "@testing-library/user-event": "^13.5.0"
+    "wait-on": "^8.0.1"
   }
 }

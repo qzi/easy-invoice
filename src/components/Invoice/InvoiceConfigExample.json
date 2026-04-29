@@ -1,0 +1,9 @@
+{
+  "billFrom": {
+    "name": "ABC"
+  },
+  "billTo": {
+    "name": "ABC Global Limited"
+  },
+  "defaultDescription": "Consulting Fee"
+}

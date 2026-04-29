@@ -32,6 +32,7 @@ function InvoiceComponent() {
   const [billFrom, setBillFrom] = useState({ name: '' });
   const [billTo, setBillTo] = useState({ name: '' });
   const [invoiceDate, setInvoiceDate] = useState('');
+  const [defaultDescription, setDefaultDescription] = useState('');
   const navigate = useNavigate();
 
   // Generate a unique invoice ID
@@ -41,9 +42,30 @@ function InvoiceComponent() {
   useEffect(() => {
     setInvoiceId(generateInvoiceId());
 
-    // Set default values for Bill From and Bill To
-    setBillFrom(InvoiceConfig.billFrom);
-    setBillTo(InvoiceConfig.billTo);
+    // Load from localStorage if exists, else fallback to InvoiceConfig
+    const savedSettings = localStorage.getItem('invoiceSettings');
+    if (savedSettings) {
+      try {
+        const parsed = JSON.parse(savedSettings);
+        setBillFrom(parsed.billFrom || InvoiceConfig.billFrom);
+        setBillTo(parsed.billTo || InvoiceConfig.billTo);
+        const desc = parsed.defaultDescription || InvoiceConfig.defaultDescription || '';
+        setDefaultDescription(desc);
+        setItems([{ description: desc, price: 0 }]);
+      } catch (e) {
+        setBillFrom(InvoiceConfig.billFrom);
+        setBillTo(InvoiceConfig.billTo);
+        const desc = InvoiceConfig.defaultDescription || '';
+        setDefaultDescription(desc);
+        setItems([{ description: desc, price: 0 }]);
+      }
+    } else {
+      setBillFrom(InvoiceConfig.billFrom);
+      setBillTo(InvoiceConfig.billTo);
+      const desc = InvoiceConfig.defaultDescription || '';
+      setDefaultDescription(desc);
+      setItems([{ description: desc, price: 0 }]);
+    }
 
     // Set the initial invoice date to today
     const today = new Date().toISOString().split('T')[0];
@@ -70,23 +92,25 @@ function InvoiceComponent() {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    html2canvas(input, { useCORS: true, scale: 2 })
+    html2canvas(input, { useCORS: true, scale: 2, backgroundColor: null })
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const imgWidth = pageWidth;
+        // Calculate true 100% physical size (CSS pixels to mm assuming 96 DPI)
+        const imgWidth = (input.offsetWidth * 25.4) / 96;
+        const xOffset = (pageWidth - imgWidth) / 2;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let position = 0;
+        let position = 15;
         let heightLeft = imgHeight;
         // pdf.addImage(imgData, 'PNG', 0, 0);
         // Add image to the first page
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
+        heightLeft -= (pageHeight - position);
 
         // Add additional pages if necessary
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
         }
 
@@ -116,7 +140,7 @@ function InvoiceComponent() {
   };
 
   const addItem = () => {
-    setItems([...items, { description: '', price: 0 }]);
+    setItems([...items, { description: defaultDescription, price: 0 }]);
   };
 
   const removeItem = (index) => {
@@ -124,7 +148,7 @@ function InvoiceComponent() {
   };
 
   const calculateTotal = () =>
-    items.reduce((total, item) => total + item.price, 0).toFixed(2);
+    items.reduce((total, item) => total + (Number(item.price) || 0), 0).toFixed(2);
 
   const handleDisplayInvoice = () => {
     const invoiceData = {
@@ -140,7 +164,8 @@ function InvoiceComponent() {
 
   return (
     <div className="container">
-      <div className="invoice-container" ref={invoiceRef}>
+      <div ref={invoiceRef} style={{ padding: '30px', backgroundColor: 'transparent' }}>
+        <div className="invoice-container">
         <h2>Invoice</h2>
 
         {/* Bill From */}
@@ -165,6 +190,7 @@ function InvoiceComponent() {
               onChange={(e) =>
                 setBillFrom({ ...billFrom, name: e.target.value })
               }
+              style={{ width: '250px' }}
             />
           </div>
 
@@ -207,6 +233,7 @@ function InvoiceComponent() {
               className="invoice-input"
               value={billTo.name}
               onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
+              style={{ width: '250px' }}
             />
           </div>
           <b
@@ -230,7 +257,7 @@ function InvoiceComponent() {
             marginBottom: '12px',
           }}>
           <b>Desc.</b>
-          <b>Amount</b>
+          <b>Amount (CNY)</b>
         </div>
         {items.map((item, index) => (
           <div key={index}>
@@ -243,7 +270,7 @@ function InvoiceComponent() {
               <button
                 type="button"
                 className="remove-button"
-                onClick={() => removeItem(item.id)}>
+                onClick={() => removeItem(index)}>
                 -
               </button>
             )}
@@ -262,7 +289,7 @@ function InvoiceComponent() {
             alignItems: 'center',
           }}>
           <div />
-          <b style={{ textAlign: 'right' }}>Total: ¥{calculateTotal()}</b>
+          <b style={{ textAlign: 'right' }}>Total (CNY): ¥{calculateTotal()}</b>
         </div>
 
         <button type="button" className="remove-button" onClick={generatePDF}>
@@ -275,6 +302,14 @@ function InvoiceComponent() {
           style={{ marginTop: '10px' }}>
           Display Invoice
         </button>
+
+        <button
+          type="button"
+          onClick={() => navigate('/settings')}
+          style={{ marginTop: '10px' }}>
+          Settings
+        </button>
+      </div>
       </div>
     </div>
   );
