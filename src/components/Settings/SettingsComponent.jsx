@@ -4,12 +4,25 @@ import '../Invoice/Invoice.css';
 
 let InvoiceConfig;
 try {
-  InvoiceConfig = require('../Invoice/InvoiceConfig.json');
+  InvoiceConfig = require('../../config/InvoiceConfig.json');
 } catch (error) {
   InvoiceConfig = {
     billFrom: { name: 'Service Provider Name' },
     billTo: { name: 'Customer Name' },
   };
+}
+
+try {
+  if (window.require) {
+    const fs = window.require('fs');
+    const path = window.require('path');
+    const configPath = path.join(process.cwd(), 'config', 'InvoiceConfig.json');
+    if (fs.existsSync(configPath)) {
+      InvoiceConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    }
+  }
+} catch (error) {
+  // Fall back to default config if reading/parsing fails
 }
 
 function SettingsComponent() {
@@ -26,7 +39,9 @@ function SettingsComponent() {
         const parsed = JSON.parse(savedSettings);
         setBillFrom(parsed.billFrom || InvoiceConfig.billFrom);
         setBillTo(parsed.billTo || InvoiceConfig.billTo);
-        setDefaultDescription(parsed.defaultDescription || InvoiceConfig.defaultDescription || '');
+        setDefaultDescription(
+          parsed.defaultDescription || InvoiceConfig.defaultDescription || '',
+        );
       } catch (e) {
         setBillFrom(InvoiceConfig.billFrom);
         setBillTo(InvoiceConfig.billTo);
@@ -53,9 +68,11 @@ function SettingsComponent() {
     <div className="container">
       <div className="invoice-container">
         <h2>Settings - Default Values</h2>
-        
+
         <div style={{ marginBottom: '20px' }}>
-          <b style={{ display: 'block', marginBottom: '5px' }}>Default Bill From:</b>
+          <b style={{ display: 'block', marginBottom: '5px' }}>
+            Default Bill From:
+          </b>
           <input
             type="text"
             placeholder="Service Provider Name"
@@ -67,7 +84,9 @@ function SettingsComponent() {
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <b style={{ display: 'block', marginBottom: '5px' }}>Default Bill To:</b>
+          <b style={{ display: 'block', marginBottom: '5px' }}>
+            Default Bill To:
+          </b>
           <input
             type="text"
             placeholder="Customer Name"
@@ -79,7 +98,9 @@ function SettingsComponent() {
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <b style={{ display: 'block', marginBottom: '5px' }}>Default Item Description:</b>
+          <b style={{ display: 'block', marginBottom: '5px' }}>
+            Default Item Description:
+          </b>
           <input
             type="text"
             placeholder="e.g. Consulting Services"
@@ -90,11 +111,23 @@ function SettingsComponent() {
           />
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '30px' }}>
-          <button type="button" onClick={handleSave} style={{ flex: '1', marginRight: '10px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '30px',
+          }}>
+          <button
+            type="button"
+            onClick={handleSave}
+            style={{ flex: '1', marginRight: '10px' }}>
             Save
           </button>
-          <button type="button" onClick={handleCancel} className="remove-button" style={{ flex: '1' }}>
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="remove-button"
+            style={{ flex: '1' }}>
             Cancel
           </button>
         </div>

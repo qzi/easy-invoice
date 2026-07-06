@@ -11,12 +11,19 @@ html {
   justify-content: center;
   align-items: center;
   height: 100%;
-
 }
 
 .invoice-container {
   padding: 40px;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   width: 600px;
   background-color: #ffffff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -84,7 +91,6 @@ h2 {
   justify-content: center;
   margin-bottom: 100px;
   text-align: center;
-
 }
 
 .vertical-text-button:hover {
@@ -160,7 +166,8 @@ button:hover {
 
 /* control the print layout */
 @media print {
-  html, body {
+  html,
+  body {
     height: auto !important;
   }
 
@@ -173,7 +180,8 @@ button:hover {
     print-color-adjust: exact;
   }
 
-  .remove-button, .no-print {
+  .remove-button,
+  .no-print {
     display: none !important;
   }
 

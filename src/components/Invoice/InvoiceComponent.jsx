@@ -10,20 +10,31 @@ import './Invoice.css';
 
 let InvoiceConfig;
 try {
-  InvoiceConfig = require('./InvoiceConfig.json');
+  InvoiceConfig = require('../../config/InvoiceConfig.json');
 } catch (error) {
-  if (process.env.NODE_ENV !== 'production') {
-    /* eslint-disable no-console */
-    console.error(
-      'Failed to load InvoiceConfig.json, using default values',
-      error,
-    );
-  }
-
   InvoiceConfig = {
     billFrom: { name: 'Service Provider Name' },
     billTo: { name: 'Customer Name' },
   };
+}
+
+try {
+  if (window.require) {
+    const fs = window.require('fs');
+    const path = window.require('path');
+    const configPath = path.join(process.cwd(), 'config', 'InvoiceConfig.json');
+    if (fs.existsSync(configPath)) {
+      InvoiceConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    }
+  }
+} catch (error) {
+  if (process.env.NODE_ENV !== 'production') {
+    /* eslint-disable no-console */
+    console.error(
+      'Failed to load InvoiceConfig.json from external config folder, using bundled config',
+      error,
+    );
+  }
 }
 
 function InvoiceComponent() {
@@ -49,7 +60,8 @@ function InvoiceComponent() {
         const parsed = JSON.parse(savedSettings);
         setBillFrom(parsed.billFrom || InvoiceConfig.billFrom);
         setBillTo(parsed.billTo || InvoiceConfig.billTo);
-        const desc = parsed.defaultDescription || InvoiceConfig.defaultDescription || '';
+        const desc =
+          parsed.defaultDescription || InvoiceConfig.defaultDescription || '';
         setDefaultDescription(desc);
         setItems([{ description: desc, price: 0 }]);
       } catch (e) {
@@ -104,7 +116,7 @@ function InvoiceComponent() {
         // pdf.addImage(imgData, 'PNG', 0, 0);
         // Add image to the first page
         pdf.addImage(imgData, 'PNG', xOffset, position, imgWidth, imgHeight);
-        heightLeft -= (pageHeight - position);
+        heightLeft -= pageHeight - position;
 
         // Add additional pages if necessary
         while (heightLeft > 0) {
@@ -148,7 +160,9 @@ function InvoiceComponent() {
   };
 
   const calculateTotal = () =>
-    items.reduce((total, item) => total + (Number(item.price) || 0), 0).toFixed(2);
+    items
+      .reduce((total, item) => total + (Number(item.price) || 0), 0)
+      .toFixed(2);
 
   const handleDisplayInvoice = () => {
     const invoiceData = {
@@ -164,152 +178,155 @@ function InvoiceComponent() {
 
   return (
     <div className="container">
-      <div ref={invoiceRef} style={{ padding: '30px', backgroundColor: 'transparent' }}>
+      <div
+        ref={invoiceRef}
+        style={{ padding: '30px', backgroundColor: 'transparent' }}>
         <div className="invoice-container">
-        <h2>Invoice</h2>
+          <h2>Invoice</h2>
 
-        {/* Bill From */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '10px',
-            marginTop: '10px',
-            fontSize: '12px',
-
-          }}>
-          <div
-            >
-            <b style={{ height:'16px',  boxSizing: 'border-box'}}>Bill From: </b>
-            <input
-              type="text"
-              placeholder="Bill From Name"
-              className="invoice-input"
-              value={billFrom.name}
-              onChange={(e) =>
-                setBillFrom({ ...billFrom, name: e.target.value })
-              }
-              style={{ width: '250px' }}
-            />
-          </div>
-
+          {/* Bill From */}
           <div
             style={{
-              fontSize: '8px',
-              color: 'rgb(206, 206, 205)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '10px',
+              marginTop: '10px',
+              fontSize: '12px',
             }}>
-            <span>Invoice Date: </span>
-            <input
-              type="date"
-              value={invoiceDate}
-              onChange={(e) => setInvoiceDate(e.target.value)}
-              className="invoice-input"
+            <div>
+              <b style={{ height: '16px', boxSizing: 'border-box' }}>
+                Bill From:{' '}
+              </b>
+              <input
+                type="text"
+                placeholder="Bill From Name"
+                className="invoice-input"
+                value={billFrom.name}
+                onChange={(e) =>
+                  setBillFrom({ ...billFrom, name: e.target.value })
+                }
+                style={{ width: '250px' }}
+              />
+            </div>
+
+            <div
               style={{
                 fontSize: '8px',
                 color: 'rgb(206, 206, 205)',
-                height: '24px',
-                border: 'none',
-                boxSizing: 'border-box',
-                lineHeight: '1',
-                padding: '0 0 0 0px',
-                
-              }}
-            />
+              }}>
+              <span>Invoice Date: </span>
+              <input
+                type="date"
+                value={invoiceDate}
+                onChange={(e) => setInvoiceDate(e.target.value)}
+                className="invoice-input"
+                style={{
+                  fontSize: '8px',
+                  color: 'rgb(206, 206, 205)',
+                  height: '24px',
+                  border: 'none',
+                  boxSizing: 'border-box',
+                  lineHeight: '1',
+                  padding: '0 0 0 0px',
+                }}
+              />
+            </div>
           </div>
-        </div>
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <div>
-            <b>Bill To: </b>
-            <input
-              type="text"
-              placeholder="Bill To Name"
-              className="invoice-input"
-              value={billTo.name}
-              onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
-              style={{ width: '250px' }}
-            />
-          </div>
-          <b
+          <div
             style={{
-              fontSize: '8px',
-              color: 'rgb(206, 206, 205)',
-              textAlign: 'right',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}>
-            Invoice ID: {invoiceId}
-          </b>
-        </div>
-
-        {/* Item List */}
-        <hr />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '10px',
-            marginBottom: '12px',
-          }}>
-          <b>Desc.</b>
-          <b>Amount (CNY)</b>
-        </div>
-        {items.map((item, index) => (
-          <div key={index}>
-            <InvoiceItemComponent
-              item={item}
-              index={index}
-              handleItemChange={handleItemChange}
-            />
-            {items.length > 1 && (
-              <button
-                type="button"
-                className="remove-button"
-                onClick={() => removeItem(index)}>
-                -
-              </button>
-            )}
+            <div>
+              <b>Bill To: </b>
+              <input
+                type="text"
+                placeholder="Bill To Name"
+                className="invoice-input"
+                value={billTo.name}
+                onChange={(e) => setBillTo({ ...billTo, name: e.target.value })}
+                style={{ width: '250px' }}
+              />
+            </div>
+            <b
+              style={{
+                fontSize: '8px',
+                color: 'rgb(206, 206, 205)',
+                textAlign: 'right',
+              }}>
+              Invoice ID: {invoiceId}
+            </b>
           </div>
-        ))}
 
-        <button type="button" className="remove-button" onClick={addItem}>
-          +
-        </button>
-        <hr />
-        {/* Total */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <div />
-          <b style={{ textAlign: 'right' }}>Total (CNY): ¥{calculateTotal()}</b>
+          {/* Item List */}
+          <hr />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '10px',
+              marginBottom: '12px',
+            }}>
+            <b>Desc.</b>
+            <b>Amount (CNY)</b>
+          </div>
+          {items.map((item, index) => (
+            <div key={index}>
+              <InvoiceItemComponent
+                item={item}
+                index={index}
+                handleItemChange={handleItemChange}
+              />
+              {items.length > 1 && (
+                <button
+                  type="button"
+                  className="remove-button"
+                  onClick={() => removeItem(index)}>
+                  -
+                </button>
+              )}
+            </div>
+          ))}
+
+          <button type="button" className="remove-button" onClick={addItem}>
+            +
+          </button>
+          <hr />
+          {/* Total */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <div />
+            <b style={{ textAlign: 'right' }}>
+              Total (CNY): ¥{calculateTotal()}
+            </b>
+          </div>
+
+          <button type="button" className="remove-button" onClick={generatePDF}>
+            Download PDF
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDisplayInvoice}
+            style={{ marginTop: '10px' }}>
+            Display Invoice
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate('/settings')}
+            style={{ marginTop: '10px' }}>
+            Settings
+          </button>
         </div>
-
-        <button type="button" className="remove-button" onClick={generatePDF}>
-          Download PDF
-        </button>
-
-        <button
-          type="button"
-          onClick={handleDisplayInvoice}
-          style={{ marginTop: '10px' }}>
-          Display Invoice
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate('/settings')}
-          style={{ marginTop: '10px' }}>
-          Settings
-        </button>
-      </div>
       </div>
     </div>
   );

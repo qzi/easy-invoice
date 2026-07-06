@@ -57,14 +57,27 @@ function InvoiceDisplayComponent() {
           </div>
           <ul style={{ display: 'block' }}>
             {invoiceData.items.map((item, index) => (
-              <li key={item.id || index} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid #eee' }}>
+              <li
+                key={item.id || index}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '8px 0',
+                  borderBottom: '1px solid #eee',
+                }}>
                 <span>{item.description || 'Item'}</span>
                 <span>¥{Number(item.price).toFixed(2)}</span>
               </li>
             ))}
           </ul>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px', fontSize: '18px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+            fontSize: '18px',
+          }}>
           <b>Total (CNY):</b> <b>¥{invoiceData.total}</b>
         </div>
       </div>
