@@ -4,12 +4,11 @@ import '../Invoice/Invoice.css';
 
 let InvoiceConfig;
 try {
-  const context = require.context('../../config', false, /\.json$/);
-  const keys = context.keys();
-  if (keys.includes('./InvoiceConfig.json')) {
-    InvoiceConfig = context('./InvoiceConfig.json');
-  } else if (keys.includes('./InvoiceConfig.default.json')) {
-    InvoiceConfig = context('./InvoiceConfig.default.json');
+  const modules = import.meta.glob('../../config/*.json', { eager: true, import: 'default' });
+  if (modules['../../config/InvoiceConfig.json']) {
+    InvoiceConfig = modules['../../config/InvoiceConfig.json'];
+  } else if (modules['../../config/InvoiceConfig.default.json']) {
+    InvoiceConfig = modules['../../config/InvoiceConfig.default.json'];
   } else {
     InvoiceConfig = {
       billFrom: { name: 'Service Provider Name' },
