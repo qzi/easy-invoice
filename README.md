@@ -5,7 +5,7 @@ Based on it, you can customize the invoice as per your requirement easily.
 
 ## Pre-requisite
 
-- Node.js@20
+- Node.js@24
 - React@18
 
 add ./src/config/InvoiceConfig.json
