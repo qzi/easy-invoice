@@ -12,8 +12,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 950,
+    height: 850,
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false, // 禁用 web 安全性

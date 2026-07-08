@@ -41,7 +41,7 @@
     "electron": "electron .",
     "electron-build": "npm run build && electron .",
     "dist": "electron-builder",
-    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "vite build"
   },
   "browserslist": {
