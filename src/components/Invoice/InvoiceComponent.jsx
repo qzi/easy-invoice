@@ -10,11 +10,24 @@ import './Invoice.css';
 
 let InvoiceConfig;
 try {
-  InvoiceConfig = require('../../config/InvoiceConfig.json');
+  const context = require.context('../../config', false, /\.json$/);
+  const keys = context.keys();
+  if (keys.includes('./InvoiceConfig.json')) {
+    InvoiceConfig = context('./InvoiceConfig.json');
+  } else if (keys.includes('./InvoiceConfig.default.json')) {
+    InvoiceConfig = context('./InvoiceConfig.default.json');
+  } else {
+    InvoiceConfig = {
+      billFrom: { name: 'Service Provider Name' },
+      billTo: { name: 'Customer Name' },
+      defaultDescription: 'Consulting Fee',
+    };
+  }
 } catch (error) {
   InvoiceConfig = {
     billFrom: { name: 'Service Provider Name' },
     billTo: { name: 'Customer Name' },
+    defaultDescription: 'Consulting Fee',
   };
 }
 

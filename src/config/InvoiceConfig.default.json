@@ -1,0 +1,9 @@
+{
+  "billFrom": {
+    "name": "Service Provider Name"
+  },
+  "billTo": {
+    "name": "Customer Name"
+  },
+  "defaultDescription": "Consulting Fee"
+}
